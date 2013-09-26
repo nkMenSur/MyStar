@@ -237,18 +237,14 @@ $(function () {
                 var newStartTile = null;
                 /*check if the current tile is a dead end*/
                 alternatingPath(newStart.length);
-
-                /*sorting the current 8 distances to the target in an accending order*/
-                checkedNeighbours = _.sortBy(distances, function (num) {
-                    return num;
-                });
-                
-                /*chosing the closest tile to the target as the next startTile*/
+                /*finding the closest tile to the target*/
                 for (var i = 0; i < newStart.length; i++) {
-                    if (newStart[i].distanceToTarget == checkedNeighbours[0]) {
+                    if (newStart[i].distanceToTarget < distanceComparison) {
                         newStartTile = newStart[i];
+                        distanceComparison = newStart[i].distanceToTarget;
                     }
                 }
+
                 newStartTile.className += ' marker';
 
                 /*setting up the new waypoint*/
