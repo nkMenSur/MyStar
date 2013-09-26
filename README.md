@@ -1,5 +1,5 @@
 MyStar
 ======
 
-This is basicly a pathfinding script written in Javascript.
-It's stil in development.
+This is basicly a div-based pathfinding script written in JavaScript.
+It's stil in development tho.
