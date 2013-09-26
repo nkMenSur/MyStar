@@ -7,19 +7,29 @@ div.row:first-child {
 }
 div.row {
     margin-top:20px;
+    text-align:center;
+    display:block;
+}
+.clr{
+    clear:both;
 }
 div.row label {
     display:block;
 }
 .customButton {
     padding:10px 15px;
-    width:100px;
+    width:86%;
     background-color:#666;
     text-align:center;
     cursor:pointer;
 }
+.form{
+    background-color:#939496;
+    padding:14px 20px 20px 20px;
+}
+.form,
 .frame{
-    padding-top:20px;
+    float:left;
 }
 .plains, .rock, .wall {
     height:8px;
@@ -37,6 +47,9 @@ div.row label {
 }
 .wall {
     background-color:#000!important;
+}
+.frame{
+    margin-left:15px;
 }
 .frame div.marker {
     background-color:green;

@@ -212,7 +212,6 @@ $(function () {
 
                 function alternatingPath(amountOfSurroundingTiles) {
                     if (amountOfSurroundingTiles == 0) {
-                        debugger;
 
                         for (var i = visitedTiles.length - 1; i >= 0 ; i--) {
                             var backStepY = parseInt(visitedTiles[i].visibleTile.dataset['yco']);
@@ -263,11 +262,6 @@ $(function () {
                 /*condition for finishing the loop*/
                 if (currentPlateX === endCoorX && currentPlateY === endCoorY) {
                     endGame = true;
-                    //console.log(visitedTiles);
-                    //for (props in visitedTiles) {
-                    //    var currentTile = visitedTiles[props];
-                    //    currentTile.className += ' marker';
-                    //}
                 }
             }
             console.log(new Date - d1);
