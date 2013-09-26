@@ -1,0 +1,50 @@
+.rainCoat {
+    /*width:512px;
+    margin:0 auto;*/
+}
+div.row:first-child {
+    margin-top:0px;
+}
+div.row {
+    margin-top:20px;
+}
+div.row label {
+    display:block;
+}
+.customButton {
+    padding:10px 15px;
+    width:100px;
+    background-color:#666;
+    text-align:center;
+    cursor:pointer;
+}
+.frame{
+    padding-top:20px;
+}
+.plains, .rock, .wall {
+    height:8px;
+    width:8px;
+    text-align:center;
+    display:inline-block;
+    cursor:pointer;
+    /*border:1px dashed #fff;*/
+}
+.plains {
+    background-color:#fb0;
+}
+.rock {
+    background-color:#666!important;
+}
+.wall {
+    background-color:#000!important;
+}
+.frame div.marker {
+    background-color:green;
+}
+
+.end {
+    background-color:#f00!important;
+}
+.start{
+    background-color:#4cff00
+}
