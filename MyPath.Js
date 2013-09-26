@@ -3,7 +3,8 @@ var visitedTiles = [];
 
 $(function () {
         /*tile properties*/
-        var gridHeigth, strtCoorX, strtCoorY, endCoorX, endCoorY, gridWidth;
+    var gridHeigth, strtCoorX, strtCoorY, endCoorX, endCoorY, gridWidth;
+    var startSet = endSet = false;
         var start = 1
         var newStart = [];
         checkedNeighbours = [];
