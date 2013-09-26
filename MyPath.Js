@@ -13,18 +13,42 @@ $(function () {
 
             $('.gridWidth').val('40');
             $('.createGrid').click();
-
-            tiles['3|5'].visibleTile.className += ' rock';
-            tiles['4|5'].visibleTile.className += ' rock';
-            tiles['5|5'].visibleTile.className += ' rock';
-            tiles['6|5'].visibleTile.className += ' rock';
-            tiles['7|5'].visibleTile.className += ' rock';
-            tiles['8|5'].visibleTile.className += ' rock';
-            tiles['9|5'].visibleTile.className += ' rock';
-            tiles['9|6'].visibleTile.className += ' rock';
-            tiles['9|7'].visibleTile.className += ' rock';
-            tiles['9|8'].visibleTile.className += ' rock';
-            tiles['9|9'].visibleTile.className += ' rock';
+            tiles['3|3'].visibleTile.className += ' rock'; 
+            tiles['3|4'].visibleTile.className += ' rock'; 
+            tiles['3|5'].visibleTile.className += ' rock'; 
+            tiles['3|18'].visibleTile.className += ' rock';
+            tiles['3|19'].visibleTile.className += ' rock';
+            tiles['3|20'].visibleTile.className += ' rock';
+            tiles['4|2'].visibleTile.className += ' rock'; 
+            tiles['4|3'].visibleTile.className += ' rock'; 
+            tiles['4|5'].visibleTile.className += ' rock'; 
+            tiles['4|18'].visibleTile.className += ' rock';
+            tiles['4|20'].visibleTile.className += ' rock';
+            tiles['4|21'].visibleTile.className += ' rock';
+            tiles['5|1'].visibleTile.className += ' rock'; 
+            tiles['5|2'].visibleTile.className += ' rock'; 
+            tiles['5|5'].visibleTile.className += ' rock'; 
+            tiles['5|18'].visibleTile.className += ' rock';
+            tiles['5|21'].visibleTile.className += ' rock';
+            tiles['5|22'].visibleTile.className += ' rock';
+            tiles['6|1'].visibleTile.className += ' rock'; 
+            tiles['6|5'].visibleTile.className += ' rock'; 
+            tiles['6|18'].visibleTile.className += ' rock';
+            tiles['6|22'].visibleTile.className += ' rock';
+            tiles['7|1'].visibleTile.className += ' rock'; 
+            tiles['7|5'].visibleTile.className += ' rock'; 
+            tiles['7|18'].visibleTile.className += ' rock';
+            tiles['7|22'].visibleTile.className += ' rock';
+            tiles['8|1'].visibleTile.className += ' rock'; 
+            tiles['8|5'].visibleTile.className += ' rock'; 
+            tiles['8|18'].visibleTile.className += ' rock';
+            tiles['8|22'].visibleTile.className += ' rock';
+            tiles['9|1'].visibleTile.className += ' rock'; 
+            tiles['9|5'].visibleTile.className += ' rock'; 
+            tiles['9|6'].visibleTile.className += ' rock'; 
+            tiles['9|7'].visibleTile.className += ' rock'; 
+            tiles['9|8'].visibleTile.className += ' rock'; 
+            tiles['9|9'].visibleTile.className += ' rock'; 
             tiles['9|10'].visibleTile.className += ' rock';
             tiles['9|11'].visibleTile.className += ' rock';
             tiles['9|12'].visibleTile.className += ' rock';
@@ -33,13 +57,25 @@ $(function () {
             tiles['9|15'].visibleTile.className += ' rock';
             tiles['9|16'].visibleTile.className += ' rock';
             tiles['9|17'].visibleTile.className += ' rock';
-            tiles['3|18'].visibleTile.className += ' rock';
-            tiles['4|18'].visibleTile.className += ' rock';
-            tiles['5|18'].visibleTile.className += ' rock';
-            tiles['6|18'].visibleTile.className += ' rock';
-            tiles['7|18'].visibleTile.className += ' rock';
-            tiles['8|18'].visibleTile.className += ' rock';
             tiles['9|18'].visibleTile.className += ' rock';
+            tiles['9|22'].visibleTile.className += ' rock';
+            tiles['10|1'].visibleTile.className += ' rock';
+            tiles['10|22'].visibleTile.className += ' rock'
+            tiles['11|1'].visibleTile.className += ' rock';
+            tiles['11|22'].visibleTile.className += ' rock'
+            tiles['12|1'].visibleTile.className += ' rock';
+            tiles['12|22'].visibleTile.className += ' rock'
+            tiles['13|1'].visibleTile.className += ' rock';
+            tiles['13|22'].visibleTile.className += ' rock'
+            tiles['14|1'].visibleTile.className += ' rock';
+            tiles['14|22'].visibleTile.className += ' rock'
+            tiles['15|0'].visibleTile.className += ' rock';
+            tiles['15|1'].visibleTile.className += ' rock';
+            tiles['15|22'].visibleTile.className += ' rock'
+            tiles['16|22'].visibleTile.className += ' rock'
+            tiles['17|22'].visibleTile.className += ' rock'
+            tiles['18|22'].visibleTile.className += ' rock'
+            tiles['19|22'].visibleTile.className += ' rock'
         });
 
         /*NodeObjectConstructor with necessary properties and parameters.*/
@@ -161,16 +197,34 @@ $(function () {
                     }
                     return newStart;
                 }
+                function checkNeighbours(newStart, currentPlateX, currentPlateY) {
+
+                    newStart = check(newStart, currentPlateX - 1, currentPlateY - 1);
+                    newStart = check(newStart, currentPlateX, currentPlateY - 1);
+                    newStart = check(newStart, currentPlateX + 1, currentPlateY - 1);
+                    newStart = check(newStart, currentPlateX - 1, currentPlateY);
+                    newStart = check(newStart, currentPlateX + 1, currentPlateY);
+                    newStart = check(newStart, currentPlateX - 1, currentPlateY + 1);
+                    newStart = check(newStart, currentPlateX, currentPlateY + 1);
+                    newStart = check(newStart, currentPlateX + 1, currentPlateY + 1);
+                    return newStart;
+                };
 
                 function alternatingPath(amountOfSurroundingTiles) {
                     if (amountOfSurroundingTiles == 0) {
-                        while (newStart.length == 0) {
-                            console.log('dead end');
-                            var backStep;
-                            for (var i = visitedTiles.length - 1; i >= 0 ; i--) {
-                                console.log(visitedTiles[i]);
-                                debugger;
+                        debugger;
+
+                        for (var i = visitedTiles.length - 1; i >= 0 ; i--) {
+                            var backStepY = parseInt(visitedTiles[i].visibleTile.dataset['yco']);
+                            var backStepX = parseInt(visitedTiles[i].visibleTile.dataset['xco']);
+                            tiles[backStepX + '|' + backStepY].closed = false;
+
+                            
+                            newStart = checkNeighbours(newStart, backStepX, backStepY);
+                            if (newStart.length > 0) {
+                                return newStart;
                             }
+                            tiles[backStepX + '|' + backStepY].closed = true;
                         }
                     } else {
                         return;
@@ -178,17 +232,11 @@ $(function () {
                 }
 
                 /*finding all 8 neighbours of the current waypoint*/
-                newStart = check(newStart, currentPlateX - 1, currentPlateY - 1);
-                newStart = check(newStart, currentPlateX, currentPlateY - 1);
-                newStart = check(newStart, currentPlateX + 1, currentPlateY - 1);
-                newStart = check(newStart, currentPlateX - 1, currentPlateY);
-                newStart = check(newStart, currentPlateX + 1, currentPlateY);
-                newStart = check(newStart, currentPlateX - 1, currentPlateY + 1);
-                newStart = check(newStart, currentPlateX, currentPlateY + 1);
-                newStart = check(newStart, currentPlateX + 1, currentPlateY + 1);
+
+                newStart = checkNeighbours(newStart, currentPlateX, currentPlateY)
 
                 var newStartTile = null;
-
+                /*check if the current tile is a dead end*/
                 alternatingPath(newStart.length);
 
                 /*sorting the current 8 distances to the target in an accending order*/
@@ -208,7 +256,8 @@ $(function () {
                 currentPlateX = parseInt(newStartTile.dataset['xco']);
                 currentPlateY = parseInt(newStartTile.dataset['yco']);
 
-                visitedTiles.push(currentPlateX + '|' + currentPlateY);
+                //visitedTiles.push(currentPlateX + '|' + currentPlateY);
+                visitedTiles.push(tiles[currentPlateX + '|' + currentPlateY]);
                 tiles[currentPlateX + '|' + currentPlateY].closed = true;
 
                 /*condition for finishing the loop*/
