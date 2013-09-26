@@ -25,7 +25,6 @@ $(function () {
             }
         }
         $('.createGrid').click();
-        console.log(cleanField);
         for (var rocks in cleanField) {
             var currentTile = cleanField[rocks];
             tiles[currentTile.x + '|' + currentTile.y].visibleTile.className += ' rock';
