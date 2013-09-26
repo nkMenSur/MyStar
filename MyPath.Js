@@ -147,11 +147,11 @@ $(function () {
             for (var x = 0; x < gridWidth; x++) {
 
                 for (var y = 0; y < gridHeigth; y++) {
-                    //var kind = 'plains';
+                    var kind = 'plains';
                     /*different kinds of tiles to be implemented along with the heuristic*/
-                    var prob = Math.floor((Math.random() * 10) + 1);
-                    if (prob <= 7) { kind = 'plains'; };
-                    if (prob > 7) { kind = 'rock plains'; };
+                    //var prob = Math.floor((Math.random() * 10) + 1);
+                    //if (prob <= 7) { kind = 'plains'; };
+                    //if (prob > 7) { kind = 'rock plains'; };
                     //if (prob === 10) { kind = 'wall plains' };
 
                     tiles[x + "|" + y] = new NodeObject(x, y, kind);
@@ -235,8 +235,9 @@ $(function () {
                 newStart = checkNeighbours(newStart, currentPlateX, currentPlateY)
 
                 var newStartTile = null;
-                /*check if the current tile is a dead end*/
+                /*check if the current tile is a dead end, if not find the closest point to start searching from.*/
                 alternatingPath(newStart.length);
+
                 /*finding the closest tile to the target*/
                 for (var i = 0; i < newStart.length; i++) {
                     if (newStart[i].distanceToTarget < distanceComparison) {
