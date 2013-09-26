@@ -1,17 +1,41 @@
 var tiles = {};
 var visitedTiles = [];
-
+var cleanField = {};
+var clean;
 $(function () {
-        /*tile properties*/
+    /*tile properties*/
     var gridHeigth, strtCoorX, strtCoorY, endCoorX, endCoorY, gridWidth;
     var startSet = endSet = false;
-        var start = 1
-        var newStart = [];
-        checkedNeighbours = [];
-        //DemoWall
-        $('.demoButton').click(function () {
-            var visitedTiles = [];
+    var start = 1
+    var newStart = [];
+    checkedNeighbours = [];
 
+    /*removes everything from the field except the "rocks" */
+    $('.cleanButton').click(function (e) {
+        cleanField = {};
+        clean = true;
+        
+        for (var properties in tiles) {
+            var currentTile = tiles[properties];
+            var xco = parseInt(currentTile.visibleTile.dataset['xco']);
+            var yco = parseInt(currentTile.visibleTile.dataset['yco']);
+            
+            if (currentTile.visibleTile.classList.contains('rock')) {
+                cleanField[xco + '|' + yco] = currentTile;
+            }
+        }
+        $('.createGrid').click();
+        console.log(cleanField);
+        for (var rocks in cleanField) {
+            var currentTile = cleanField[rocks];
+            tiles[currentTile.x + '|' + currentTile.y].visibleTile.className += ' rock';
+        }
+    });
+
+    /*DemoWall*/
+    $('.demoButton').click(function () {
+            var visitedTiles = [];
+            clean = true;
             $('.gridWidth').val('40');
             $('.createGrid').click();
             tiles['3|3'].visibleTile.className += ' rock'; 
@@ -78,31 +102,15 @@ $(function () {
             tiles['18|22'].visibleTile.className += ' rock'
             tiles['19|22'].visibleTile.className += ' rock'
         });
-
-        /*NodeObjectConstructor with necessary properties and parameters.*/
-        NodeObject = function (x, y, type) {
-            this.h = function () {
-                return this.g + this.f;
-            }
-            this.g;
-            this.f;
-            this.fieldType;
-            this.x = x;
-            this.y = y;
-            this.paraneNodeX;
-            this.parentNodeY;
-            this.type = type;
-            this.closed = false;
-        };
-
-        /*drawing rocks via rightclick*/
-        $('body').on('mousedown', '.frame div', function (e) {
+    
+    /*drawing rocks via rightclick*/
+    $('body').on('mousedown', '.frame div', function (e) {
             if (e.which === 3) {
                 $(this).toggleClass('rock');
             }
         });
-
-        $('body').on('click', '.frame div', function (e) {
+    
+    $('body').on('click', '.frame div', function (e) {
             /*captureing coordinates for start and endpoint*/
             var $this = $(this);
             var $xClicked = $this.data('xco');
@@ -123,55 +131,85 @@ $(function () {
                 }
             }
         });
+    
+    /*Grid Initialisation \ starting a new generation*/
+    $('.createGrid').click(function () {
+        /*Destroying the previously used NodeObjects and stateCarrier to prepare for the next generation*/
+        if (!clean) {
+            var kindOfField = prompt('"Maze" or "Clean" ?');
+        } else {
+            kindOfField = 'plains'
+        }
+        tiles = {};
+        visitedTiles = [];
+        checkedNeighbours = [];
+        start = 1;
+        strtCoorX = null;
+        strtCoorY = null;
+        endCoorX = null;
+        endCoorY = null;
+        $('.frame').empty();
 
-
-        /*Grid Initialisation \ starting a new generation*/
-        $('.createGrid').click(function () {
-            /*Destroying the previously used NodeObjects and stateCarrier to prepare for the next generation*/
-            tiles = {};
-            visitedTiles = [];
-            checkedNeighbours = [];
-            start = 1;
-            strtCoorX = null;
-            strtCoorY = null;
-            endCoorX = null;
-            endCoorY = null;
-            $('.frame').empty();
-
-            /*parsing input*/
-            gridHeigth = gridWidth = parseInt($('.gridWidth').val());
-
-            $('.frame').css('width', gridWidth * 8);
-
-            /*recursive creating of the NodeObjects*/
-            for (var x = 0; x < gridWidth; x++) {
-
-                for (var y = 0; y < gridHeigth; y++) {
-                    var kind = 'plains';
-                    /*different kinds of tiles to be implemented along with the heuristic*/
-                    //var prob = Math.floor((Math.random() * 10) + 1);
-                    //if (prob <= 7) { kind = 'plains'; };
-                    //if (prob > 7) { kind = 'rock plains'; };
-                    //if (prob === 10) { kind = 'wall plains' };
-
-                    tiles[x + "|" + y] = new NodeObject(x, y, kind);
+        /*NodeObjectConstructor with necessary properties and parameters.*/
+        NodeObject = function (x, y, type) {
+                this.h = function () {
+                    return this.g + this.f;
                 }
+                this.g;
+                this.f;
+                this.fieldType;
+                this.x = x;
+                this.y = y;
+                this.paraneNodeX;
+                this.parentNodeY;
+                this.type = type;
+                this.closed = false;
+            };
+
+        /*parsing input*/
+        gridHeigth = gridWidth = parseInt($('.gridWidth').val());
+
+        $('.frame').css('width', gridWidth * 8);
+
+        /*recursive creating of the NodeObjects*/
+        for (var x = 0; x < gridWidth; x++) {
+
+            for (var y = 0; y < gridHeigth; y++) {
+                
+                /*different kinds of tiles to be implemented along with the heuristic*/
+                if (kindOfField === 'maze' || kindOfField === 'Maze') {
+                    var prob = Math.floor((Math.random() * 10) + 1);
+                    if (prob <= 5) { kind = 'plains'; };
+                    if (prob > 5) { kind = 'rock plains'; };
+                }
+                else if (kindOfField == 'clean' || kindOfField == 'Clean'|| clean) {
+                    var kind = 'plains';
+                }
+                else {
+                    alert('please check your spelling...');
+                    return;
+                }
+                //if (prob === 10) { kind = 'wall plains' };
+                tiles[x + "|" + y] = new NodeObject(x, y, kind);
             }
+        }
 
-            var f = $('.frame').get(0);
-            for (var properties in tiles) {
-                var currentTile = tiles[properties];
-                /*creating tiles*/
-                currentTile.visibleTile = document.createElement('div');
-                currentTile.visibleTile.setAttribute('data-xco', currentTile.x);
-                currentTile.visibleTile.setAttribute('data-yco', currentTile.y);
-                currentTile.visibleTile.className = currentTile.type;
+        var f = $('.frame').get(0);
+        for (var properties in tiles) {
+            var currentTile = tiles[properties];
+            /*creating tiles*/
+            currentTile.visibleTile = document.createElement('div');
+            currentTile.visibleTile.setAttribute('data-xco', currentTile.x);
+            currentTile.visibleTile.setAttribute('data-yco', currentTile.y);
+            currentTile.visibleTile.className = currentTile.type;
 
-                f.appendChild(currentTile.visibleTile);
-            }
-        });
+            f.appendChild(currentTile.visibleTile);
+        }
+        clean = false;
 
-        $('.startGame').click(function () {
+    });
+    
+    $('.startGame').click(function () {
 
             var d1 = new Date();
             var endGame = false;
@@ -252,7 +290,6 @@ $(function () {
                 currentPlateX = parseInt(newStartTile.dataset['xco']);
                 currentPlateY = parseInt(newStartTile.dataset['yco']);
 
-                //visitedTiles.push(currentPlateX + '|' + currentPlateY);
                 visitedTiles.push(tiles[currentPlateX + '|' + currentPlateY]);
                 tiles[currentPlateX + '|' + currentPlateY].closed = true;
 
@@ -264,4 +301,4 @@ $(function () {
             console.log(new Date - d1);
 
         })
-    });
+});
