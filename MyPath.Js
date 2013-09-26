@@ -1,12 +1,16 @@
-$(function(){
+var tiles = {};
+var visitedTiles = [];
+
+$(function () {
         /*tile properties*/
-        var tiles = {};
         var gridHeigth, strtCoorX, strtCoorY, endCoorX, endCoorY, gridWidth;
         var start = 1
         var newStart = [];
         checkedNeighbours = [];
         //DemoWall
         $('.demoButton').click(function () {
+            var visitedTiles = [];
+
             $('.gridWidth').val('40');
             $('.createGrid').click();
             tiles['3|5'].visibleTile.className += ' rock';
@@ -38,7 +42,7 @@ $(function(){
         });
 
         /*NodeObjectConstructor with necessary properties and parameters.*/
-        NodeObject = function (x, y, type, visited) {
+        NodeObject = function (x, y, type) {
             this.h = function () {
                 return this.g + this.f;
             }
@@ -50,7 +54,6 @@ $(function(){
             this.paraneNodeX;
             this.parentNodeY;
             this.type = type;
-            this.visited = 0;
             this.closed = false;
         };
         /*drawing rocks via rightclick*/
@@ -86,6 +89,7 @@ $(function(){
         $('.createGrid').click(function () {
             /*Destroying the previously used NodeObjects and stateCarrier to prepare for the next generation*/
             tiles = {};
+            visitedTiles = [];
             checkedNeighbours = [];
             start = 1;
             strtCoorX = null;
@@ -136,7 +140,6 @@ $(function(){
             var endGame = false;
             var currentPlateX = strtCoorX;
             var currentPlateY = strtCoorY;
-            var visitedTiles = {};
 
             while (!endGame) {
                 var distanceComparison = 4294967295;
@@ -152,12 +155,10 @@ $(function(){
                 function check(newStart, curX, curY) {
                     id = curX + '|' + curY
                     if (tiles[id] !== undefined && !tiles[id].visibleTile.classList.contains('rock') && !tiles[id].closed) {
-                        if (tiles[id].visited < 1) {
-
                             tiles[id].visibleTile.distanceToTarget = Math.pow(Math.abs(curX - endX), 2) + Math.pow(Math.abs(curY - endY), 2);
                             newStart.push(tiles[id].visibleTile);
                             distances.push(tiles[id].visibleTile.distanceToTarget);
-                        }
+                        
                     }
                     return newStart;
                 }
@@ -178,34 +179,28 @@ $(function(){
 
                 var newStartTile = null;
 
-                /*finding the closest tile to the target*/
-                //checkedNeighbours = _.sortBy(distances, function (num) {
-                //    return num;
-                //});
-
-                for (var i = 0; i < newStart.length; i++) {
-                    if (newStart[i].distanceToTarget < distanceComparison) {
-                        newStartTile = newStart[i];
-                        distanceComparison = newStart[i].distanceToTarget;
-                    }
-                }
-
+                /*sorting the current 8 distances to the target in an accending order*/
+                checkedNeighbours = _.sortBy(distances, function (num) {
+                    return num;
+                });
+                
+                /*chosing the closest tile to the target as the next startTile*/
                 for (var i = 0; i < newStart.length; i++) {
                     if (newStart[i].distanceToTarget == checkedNeighbours[0]) {
                         newStartTile = newStart[i];
                     }
                 }
+
                 newStartTile.className += ' marker';
 
                 /*setting up the new waypoint*/
                 currentPlateX = parseInt(newStartTile.dataset['xco']);
                 currentPlateY = parseInt(newStartTile.dataset['yco']);
 
-                visitedTiles[currentPlateX + '|' + currentPlateY] = newStartTile;
-                if (tiles[currentPlateX + '|' + currentPlateY].visited < 8) {
-                    tiles[currentPlateX + '|' + currentPlateY].visited += 1;
-                }
+                visitedTiles.push(newStartTile);
+                tiles[currentPlateX + '|' + currentPlateY].closed = true;
                 debugger;
+
                 /*condition for finishing the loop*/
                 if (currentPlateX === endCoorX && currentPlateY === endCoorY) {
                     endGame = true;
