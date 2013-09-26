@@ -22,7 +22,7 @@ $(function () {
 
             if (currentTile.visibleTile.classList.contains('rock')) {
                 cleanField[xco + '|' + yco] = currentTile;
-            }
+            };
         };
         /*redrawing the grid*/
         $('.createGrid').click();
@@ -116,7 +116,7 @@ $(function () {
         };
     });
     /*Setting eht Start- and End-Point*/
-    $('body').on('click', '.frame div', function (e) {
+    $('body').on('click', '.frame div', function () {
             /*captureing coordinates for start and endpoint*/
             var $this = $(this);
             var $xClicked = $this.data('xco');
