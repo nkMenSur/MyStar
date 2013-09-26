@@ -13,6 +13,7 @@ $(function () {
 
             $('.gridWidth').val('40');
             $('.createGrid').click();
+
             tiles['3|5'].visibleTile.className += ' rock';
             tiles['4|5'].visibleTile.className += ' rock';
             tiles['5|5'].visibleTile.className += ' rock';
@@ -56,12 +57,14 @@ $(function () {
             this.type = type;
             this.closed = false;
         };
+
         /*drawing rocks via rightclick*/
         $('body').on('mousedown', '.frame div', function (e) {
             if (e.which === 3) {
                 $(this).toggleClass('rock');
             }
         });
+
         $('body').on('click', '.frame div', function (e) {
             /*captureing coordinates for start and endpoint*/
             var $this = $(this);
@@ -102,9 +105,7 @@ $(function () {
             gridWidth = parseInt($('.gridWidth').val());
             gridHeigth = gridWidth;
 
-
             $('.frame').css('width', gridWidth * 8);
-
 
             /*recursive creating of the NodeObjects*/
             for (var x = 0; x < gridWidth; x++) {
@@ -124,7 +125,7 @@ $(function () {
             var f = $('.frame').get(0);
             for (var properties in tiles) {
                 var currentTile = tiles[properties];
-
+                /*creating tiles*/
                 currentTile.visibleTile = document.createElement('div');
                 currentTile.visibleTile.setAttribute('data-xco', currentTile.x);
                 currentTile.visibleTile.setAttribute('data-yco', currentTile.y);
@@ -145,23 +146,37 @@ $(function () {
                 var distanceComparison = 4294967295;
                 var newStart = [];
                 var distances = [];
-                var visa = [];
                 var mod, curX, curY, endX, endY, id;
                 endX = endCoorX;
                 endY = endCoorY;
 
-                /*function for finding neighbours*/
 
+                /*function for finding neighbours*/
                 function check(newStart, curX, curY) {
                     id = curX + '|' + curY
                     if (tiles[id] !== undefined && !tiles[id].visibleTile.classList.contains('rock') && !tiles[id].closed) {
                             tiles[id].visibleTile.distanceToTarget = Math.pow(Math.abs(curX - endX), 2) + Math.pow(Math.abs(curY - endY), 2);
                             newStart.push(tiles[id].visibleTile);
                             distances.push(tiles[id].visibleTile.distanceToTarget);
-                        
                     }
                     return newStart;
                 }
+
+                function alternatingPath(amountOfSurroundingTiles) {
+                    if (amountOfSurroundingTiles == 0) {
+                        while (newStart.length == 0) {
+                            console.log('dead end');
+                            var backStep;
+                            for (var i = visitedTiles.length - 1; i >= 0 ; i--) {
+                                console.log(visitedTiles[i]);
+                                debugger;
+                            }
+                        }
+                    } else {
+                        return;
+                    }
+                }
+
                 /*finding all 8 neighbours of the current waypoint*/
                 newStart = check(newStart, currentPlateX - 1, currentPlateY - 1);
                 newStart = check(newStart, currentPlateX, currentPlateY - 1);
@@ -172,12 +187,9 @@ $(function () {
                 newStart = check(newStart, currentPlateX, currentPlateY + 1);
                 newStart = check(newStart, currentPlateX + 1, currentPlateY + 1);
 
-                if (newStart.length == 0) {
-                    alert('1234');
-                    return;
-                }
-
                 var newStartTile = null;
+
+                alternatingPath(newStart.length);
 
                 /*sorting the current 8 distances to the target in an accending order*/
                 checkedNeighbours = _.sortBy(distances, function (num) {
@@ -190,16 +202,14 @@ $(function () {
                         newStartTile = newStart[i];
                     }
                 }
-
                 newStartTile.className += ' marker';
 
                 /*setting up the new waypoint*/
                 currentPlateX = parseInt(newStartTile.dataset['xco']);
                 currentPlateY = parseInt(newStartTile.dataset['yco']);
 
-                visitedTiles.push(newStartTile);
+                visitedTiles.push(currentPlateX + '|' + currentPlateY);
                 tiles[currentPlateX + '|' + currentPlateY].closed = true;
-                debugger;
 
                 /*condition for finishing the loop*/
                 if (currentPlateX === endCoorX && currentPlateY === endCoorY) {
