@@ -139,8 +139,7 @@ $(function () {
             $('.frame').empty();
 
             /*parsing input*/
-            gridWidth = parseInt($('.gridWidth').val());
-            gridHeigth = gridWidth;
+            gridHeigth = gridWidth = parseInt($('.gridWidth').val());
 
             $('.frame').css('width', gridWidth * 8);
 
@@ -148,11 +147,11 @@ $(function () {
             for (var x = 0; x < gridWidth; x++) {
 
                 for (var y = 0; y < gridHeigth; y++) {
-                    var kind = 'plains';
+                    //var kind = 'plains';
                     /*different kinds of tiles to be implemented along with the heuristic*/
-                    //var prob = Math.floor((Math.random() * 10) + 1);
-                    //if (prob <= 7) { kind = 'plains'; };
-                    //if (prob > 7) { kind = 'rock plains'; };
+                    var prob = Math.floor((Math.random() * 10) + 1);
+                    if (prob <= 7) { kind = 'plains'; };
+                    if (prob > 7) { kind = 'rock plains'; };
                     //if (prob === 10) { kind = 'wall plains' };
 
                     tiles[x + "|" + y] = new NodeObject(x, y, kind);
