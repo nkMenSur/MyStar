@@ -190,8 +190,8 @@ $(function () {
                 if (kindOfField === 'maze' || kindOfField === 'Maze') {
                     var prob = Math.floor((Math.random() * 10) + 1);
 
-                    if (prob <= 5) { kind = 'plains'; };
-                    if (prob > 5) { kind = 'rock plains'; };
+                    if (prob <= 4) { kind = 'plains'; };
+                    if (prob > 6) { kind = 'rock plains'; };
                 }
                 else if (kindOfField == 'clean' || kindOfField == 'Clean' || clean) {
                     var kind = 'plains';
