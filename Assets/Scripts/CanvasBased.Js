@@ -6,12 +6,12 @@
     var canvas = document.getElementById("pathFind");
     var context = canvas.getContext("2d");
     var draw = false;
+
     /*tileSize dependence*/
     var modifyer = 30;
+
     var mousePos;
     var clickedTile;
-
-   
 
     /*preloading images*/
     var goldenSand = new Image();
