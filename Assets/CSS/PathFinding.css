@@ -61,3 +61,6 @@ div.row label {
 .start{
     background-color:#4cff00
 }
+#pathFind {
+    border:1px solid black;
+}
