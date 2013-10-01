@@ -1,10 +1,17 @@
 ﻿$(function () {
     var nodes = {};
+<<<<<<< HEAD
+    /*initializing the canvas context*/
+    var canvas = document.getElementById("pathFind");
+    var context = canvas.getContext("2d");
+
+    /*tileSize dependence*/
+=======
     var created = false;
     var canvas = document.getElementById("pathFind");
     var context = canvas.getContext("2d");
     var draw = false;
-    /*tileSize dependence*/
+>>>>>>> develop
     var modifyer = 30;
     var mousePos;
     var clickedTile;
@@ -114,11 +121,14 @@
                 nodes[x + "|" + y] = new NodeObject(x, y, tileKind, assignImage(tileKind));
             };
         };
+<<<<<<< HEAD
         for (ptops in nodes) {
             var currentNode = nodes[ptops];
             context.drawImage(currentNode.image, currentNode.x * 30, currentNode.y * 30);
         }
+=======
         created = true;
+>>>>>>> develop
         console.log(nodes);
         console.log('___________________________________');
         console.log(new Date() - d1);
@@ -126,6 +136,13 @@
 
 
     $('.startGame').click(function () {
+<<<<<<< HEAD
+        var d2 = new Date();
+        
+        
+        console.log('_________________________________________________________');
+        console.log(new Date - d2);
+=======
         draw = true;
 
         if (created) {
@@ -141,9 +158,7 @@
         }
         drawTileWhenCreated();
         
-        
-        console.log('_________________________________________________________');
-        console.log(new Date - d2);
+>>>>>>> develop
     });
     /*finding and editing tiles based on clickEvent*/
     
