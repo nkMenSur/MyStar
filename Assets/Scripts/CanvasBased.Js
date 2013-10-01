@@ -7,31 +7,46 @@
     canvas.width = 0;
     canvas.height = 0;
 
-    var defaultTile = new Image();
-    defaultTile.src = 'Assets/Images/environment/passableTiles/greenGrass30x30.png';
+    var goldenSand = new Image();
+    goldenSand.src = 'Assets/Images/environment/passableTiles/goldenSand30x30.png';
+
+    var greenGrass = new Image();
+    greenGrass.src = 'Assets/Images/environment/passableTiles/greenGrass30x30.png';
+
+    var greenRock = new Image();
+    greenRock.src = 'Assets/Images/environment/impassibleTiles/greenRock30x30.png';
+
+    var goldRock = new Image();
+    goldRock.src = 'Assets/Images/environment/impassibleTiles/goldRock30x30.png';
+
+    var blackRock = new Image();
+    blackRock.src = 'Assets/Images/environment/impassibleTiles/blackRock30x30.png';
+
+    var redRock = new Image();
+    redRock.src = 'Assets/Images/environment/impassibleTiles/redRock30x30.png';
 
 
     /*Decision what kind if tile shall be placed*/
     function randomizeTile() {
         var prob = Math.floor((Math.random() * 10) + 1);
 
-        if (prob <= 6) { return 'goldenSand'; };
-        if (prob == 6) { return 'greenGrass'; };
-        if (prob == 7) { return 'greenRock'; };
-        if (prob == 8) { return 'goldRock'; };
-        if (prob == 9) { return 'blackRock'; };
-        if (prob == 10) { return 'redRock'; };
+        if (prob <= 6) { return 1; };
+        if (prob == 6) { return 2; };
+        if (prob == 7) { return 3; };
+        if (prob == 8) { return 4; };
+        if (prob == 9) { return 5; };
+        if (prob == 10) { return 6; };
 
         return kind;
     };
     /*image assignment*/
-    function assignImgSrc(kind) {
-        if (kind === 'goldenSand') { return 'Assets/Images/environment/passableTiles/goldenSand30x30.png'; }
-        else if (kind === 'greenGrass') { return 'Assets/Images/environment/passableTiles/greenGrass30x30.png'; }
-        else if (kind === 'greenRock') { return 'Assets/Images/environment/impassibleTiles/greenRock30x30.png'; }
-        else if (kind === 'goldRock') { return 'Assets/Images/environment/impassibleTiles/goldRock30x30.png'; }
-        else if (kind === 'blackRock') { return 'Assets/Images/environment/impassibleTiles/blackRock30x30.png'; }
-        else if (kind === 'redRock') { return 'Assets/Images/environment/impassibleTiles/redRock30x30.png'; }
+    function assignImage(kind) {
+        if (kind === 1) { return goldenSand; }
+        else if (kind === 2) { return greenGrass; }
+        else if (kind === 3) { return greenRock; }
+        else if (kind === 4) { return goldRock; }
+        else if (kind === 5) { return blackRock; }
+        else if (kind === 6) { return redRock }
     };
 
     $('.createGrid').click(function () {
@@ -42,15 +57,14 @@
         var gridWidth = parseInt($('.gridWidth').val());
         var gridDim = gridWidth * modifyer;
 
-        NodeObject = function (x, y, type, srcURL) {
+        NodeObject = function (x, y, type, image) {
             this.x = x;
             this.y = y;
             this.paraneNodeX;
             this.parentNodeY;   
             this.type = type;
             this.closed = false;
-            this.image = new Image();
-            this.image.src = srcURL;
+            this.image = image;
         };
 
         canvas.width = gridDim;
@@ -60,7 +74,7 @@
             for (var y = 0; y < gridWidth; y++) {
                 tileKind = randomizeTile();
 
-                nodes[x + "|" + y] = new NodeObject(x, y, tileKind, assignImgSrc(tileKind));
+                nodes[x + "|" + y] = new NodeObject(x, y, tileKind, assignImage(tileKind));
             };
         };
 
@@ -72,10 +86,7 @@
 
     $('.startGame').click(function () {
         var d2 = new Date();
-        for (props in nodes) {
-            var currentNode = nodes[props];
-            context.drawImage(defaultTile, currentNode.x * 30, currentNode.y * 30);
-        }
+        
         for (ptops in nodes) {
             var currentNode = nodes[ptops];
             context.drawImage(currentNode.image, currentNode.x * 30, currentNode.y * 30);
