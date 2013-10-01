@@ -33,30 +33,25 @@
     redRock.src = 'Assets/Images/environment/impassibleTiles/redRock30x30.png';
 
     /*added eventListener to enable drawing tiles*/
-    function drawTileWhenCreated(event) {
-        if (created) {
-            canvas.addEventListener('mousedown', function (event) {
+    function drawTileManually(event) {
+        canvas.addEventListener('mousedown', function (event) {
 
-                var mousePos = getMousePos(canvas, event);
-                var clickedTile = nodes[Math.floor(mousePos.x / 30) + "|" + Math.floor(mousePos.y / 30)];
+            var mousePos = getMousePos(canvas, event);
+            var clickedTile = nodes[Math.floor(mousePos.x / 30) + "|" + Math.floor(mousePos.y / 30)];
 
-                clickedTile.x = nodes[Math.floor(mousePos.x / 30) + "|" + Math.floor(mousePos.y / 30)].x * 30;
-                clickedTile.y = nodes[Math.floor(mousePos.x / 30) + "|" + Math.floor(mousePos.y / 30)].y * 30;
+            clickedTile.x = nodes[Math.floor(mousePos.x / 30) + "|" + Math.floor(mousePos.y / 30)].x * 30;
+            clickedTile.y = nodes[Math.floor(mousePos.x / 30) + "|" + Math.floor(mousePos.y / 30)].y * 30;
 
-                clickedTile.image = goldenSand;
+            clickedTile.image = goldenSand;
 
-                context.drawImage(goldenSand, clickedTile.x, clickedTile.y);
+            context.drawImage(goldenSand, clickedTile.x, clickedTile.y);
 
-            }, function () {
-                mousePos = null;
-                clickedTile = null;
-            });
-        } else {
-            canvas.removeEventListener('mousedown', drawTileWhenCreated);
-
-        }
+        }, function () {
+            mousePos = null;
+            clickedTile = null;
+        });
+    } 
         
-    }
 
     /*return relative mouse position*/
     function getMousePos(canvas, evt) {
@@ -99,7 +94,8 @@
         var d1 = new Date();
         nodes = {};
         draw = false;
-        canvas.removeEventListener('mousedown');
+        drawTileManually();
+
         var gridWidth = parseInt($('.gridWidth').val());
         var gridDim = gridWidth * modifyer;
 
@@ -126,8 +122,6 @@
             var currentNode = nodes[ptops];
             context.drawImage(currentNode.image, currentNode.x * 30, currentNode.y * 30);
         }
-        created = true;
-        drawTileWhenCreated();
 
         console.log('___________________________________');
         console.log(new Date() - d1);
