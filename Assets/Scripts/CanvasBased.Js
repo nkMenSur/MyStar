@@ -1,11 +1,18 @@
 ﻿$(function () {
     var nodes = {};
-
+    var created = false;
     var canvas = document.getElementById("pathFind");
     var context = canvas.getContext("2d");
+    var draw = false;
     var modifyer = 30;
+    var mousePos;
+    var clickedTile;
+
     canvas.width = 0;
     canvas.height = 0;
+
+    var goldenSand = new Image();
+    goldenSand.src = 'Assets/Images/environment/passableTiles/goldenSand30x30.png';
 
     var greenGrass = new Image();
     greenGrass.src = 'Assets/Images/environment/passableTiles/greenGrass30x30.png';
@@ -22,7 +29,40 @@
     var redRock = new Image();
     redRock.src = 'Assets/Images/environment/impassibleTiles/redRock30x30.png';
 
+    function drawTileWhenCreated(event) {
+        if (draw) {
+            canvas.addEventListener('mousedown', function (event) {
 
+                var mousePos = getMousePos(canvas, event);
+                var clickedTile = nodes[Math.floor(mousePos.x / 30) + "|" + Math.floor(mousePos.y / 30)];
+
+                clickedTile.x = nodes[Math.floor(mousePos.x / 30) + "|" + Math.floor(mousePos.y / 30)].x * 30;
+                clickedTile.y = nodes[Math.floor(mousePos.x / 30) + "|" + Math.floor(mousePos.y / 30)].y * 30;
+
+                clickedTile.image = goldenSand;
+
+                context.drawImage(goldenSand, clickedTile.x, clickedTile.y);
+
+            }, function () {
+                mousePos = null;
+                clickedTile = null;
+            });
+        } else {
+            canvas.removeEventListener('mousedown', drawTileWhenCreated);
+
+        }
+        
+    }
+    /*return relative mouse position*/
+    function getMousePos(canvas, evt) {
+        var rect = canvas.getBoundingClientRect(), root = document.documentElement;
+        var mouseX = evt.clientX - rect.left - root.scrollLeft;
+        var mouseY = evt.clientY - rect.top - root.scrollTop;
+        return {
+            x: mouseX,
+            y: mouseY
+        };
+    }
     /*Decision what kind if tile shall be placed*/
     function randomizeTile() {
         var prob = Math.floor((Math.random() * 10) + 1);
@@ -47,9 +87,9 @@
 
     $('.createGrid').click(function () {
         var d1 = new Date();
-
         nodes = {};
-        
+        draw = false;
+        canvas.removeEventListener('mousedown');
         var gridWidth = parseInt($('.gridWidth').val());
         var gridDim = gridWidth * modifyer;
 
@@ -73,7 +113,7 @@
                 nodes[x + "|" + y] = new NodeObject(x, y, tileKind, assignImage(tileKind));
             };
         };
-
+        created = true;
         console.log(nodes);
         console.log('___________________________________');
         console.log(new Date() - d1);
@@ -81,13 +121,22 @@
 
 
     $('.startGame').click(function () {
-        var d2 = new Date();
-        
-        for (ptops in nodes) {
-            var currentNode = nodes[ptops];
-            context.drawImage(currentNode.image, currentNode.x * 30, currentNode.y * 30);
+        draw = true;
+
+        if (created) {
+            var d2 = new Date();
+
+            for (ptops in nodes) {
+                var currentNode = nodes[ptops];
+                context.drawImage(currentNode.image, currentNode.x * 30, currentNode.y * 30);
+            }
+            
+            console.log('_________________________________________________________');
+            console.log(new Date - d2);
         }
-        console.log('_________________________________________________________');
-        console.log(new Date - d2);
+        drawTileWhenCreated();
+        
     });
+    /*finding and editing tiles based on clickEvent*/
+    
 });

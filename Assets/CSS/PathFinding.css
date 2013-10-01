@@ -69,6 +69,7 @@ div.row label {
 #pathFind {
     background-color:#fff;
     margin-left:20px;
+    cursor:pointer;
 }
 .canvas {
     background-color:#ccc;
