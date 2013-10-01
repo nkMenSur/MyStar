@@ -1,12 +1,15 @@
 ﻿$(function () {
     var nodes = {};
-
+    /*initializing the canvas context*/
     var canvas = document.getElementById("pathFind");
     var context = canvas.getContext("2d");
+
+    /*tileSize dependence*/
     var modifyer = 30;
     canvas.width = 0;
     canvas.height = 0;
 
+    /*preloading images*/
     var goldenSand = new Image();
     goldenSand.src = 'Assets/Images/environment/passableTiles/goldenSand30x30.png';
 
@@ -69,7 +72,6 @@
 
         canvas.width = gridDim;
         canvas.height = gridDim;
-
         for (var x = 0; x < gridWidth; x++) {
             for (var y = 0; y < gridWidth; y++) {
                 tileKind = randomizeTile();
@@ -77,7 +79,10 @@
                 nodes[x + "|" + y] = new NodeObject(x, y, tileKind, assignImage(tileKind));
             };
         };
-
+        for (ptops in nodes) {
+            var currentNode = nodes[ptops];
+            context.drawImage(currentNode.image, currentNode.x * 30, currentNode.y * 30);
+        }
         console.log(nodes);
         console.log('___________________________________');
         console.log(new Date() - d1);
@@ -87,10 +92,7 @@
     $('.startGame').click(function () {
         var d2 = new Date();
         
-        for (ptops in nodes) {
-            var currentNode = nodes[ptops];
-            context.drawImage(currentNode.image, currentNode.x * 30, currentNode.y * 30);
-        }
+        
         console.log('_________________________________________________________');
         console.log(new Date - d2);
     });
