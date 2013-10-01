@@ -7,9 +7,6 @@
     canvas.width = 0;
     canvas.height = 0;
 
-    var goldenSand = new Image();
-    goldenSand.src = 'Assets/Images/environment/passableTiles/goldenSand30x30.png';
-
     var greenGrass = new Image();
     greenGrass.src = 'Assets/Images/environment/passableTiles/greenGrass30x30.png';
 
@@ -41,8 +38,7 @@
     };
     /*image assignment*/
     function assignImage(kind) {
-        if (kind === 1) { return goldenSand; }
-        else if (kind === 2) { return greenGrass; }
+        if (kind <= 2) { return greenGrass; }
         else if (kind === 3) { return greenRock; }
         else if (kind === 4) { return goldRock; }
         else if (kind === 5) { return blackRock; }
