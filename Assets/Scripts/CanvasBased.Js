@@ -90,7 +90,7 @@
     canvas.width = 0;
     canvas.height = 0;
 
-    $('.createGrid').click(function () {
+    $('.createGrid').click(function () {    
         var d1 = new Date();
         nodes = {};
         draw = false;
@@ -129,6 +129,8 @@
 
 
     $('.startGame').click(function () {
-
+            setInterval(function () {
+                $('.createGrid').click();
+            }, 75);
     });
 });
