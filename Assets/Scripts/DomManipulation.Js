@@ -1,9 +1,8 @@
-﻿var tiles = {};
-var visitedTiles = [];
-var cleanField = {};
-var clean;
-
-$(function () {
+﻿$(function () {
+    var tiles = {};
+    var visitedTiles = [];
+    var cleanField = {};
+    var clean;
     var gridHeigth, strtCoorX, strtCoorY, endCoorX, endCoorY, gridWidth;
     var startSet = endSet = false;
     var start = 1
@@ -138,17 +137,14 @@ $(function () {
                 };
             };
         });
-    
     /*Grid Initialisation \ starting a new generation*/
     $('.createGrid').click(function () {
-
         /*Checking if its a cleanUp or a recreation*/
         if (!clean) {
             var kindOfField = prompt('"Maze" or "Clean" ?');
         } else {
             kindOfField = 'plains'
         };
-
         /*Destroying the previously used NodeObjects and stateCarrier to prepare for the next generation*/
         tiles = {};
         visitedTiles = [];
@@ -159,33 +155,27 @@ $(function () {
         endCoorX = null;
         endCoorY = null;
         $('.frame').empty();
-
         /*NodeObjectConstructor with necessary properties and parameters.*/
         NodeObject = function (x, y, type) {
             this.h = function () {
                 return this.g + this.f;
             };
-                this.g;
-                this.f;
-                this.fieldType;
-                this.x = x;
-                this.y = y;
-                this.paraneNodeX;
-                this.parentNodeY;
-                this.type = type;
-                this.closed = false;
-            };
-
+            this.g;
+            this.f;
+            this.fieldType;
+            this.x = x;
+            this.y = y;
+            this.paraneNodeX;
+            this.parentNodeY;
+            this.type = type;
+            this.closed = false;
+        };
         /*parsing input*/
         gridHeigth = gridWidth = parseInt($('.gridWidth').val());
-
         $('.frame').css('width', gridWidth * 8);
-
         /*recursive creating of the NodeObjects*/
         for (var x = 0; x < gridWidth; x++) {
-
             for (var y = 0; y < gridHeigth; y++) {
-
                 /*different kinds of tiles to be implemented along with the heuristic...*/
                 if (kindOfField === 'maze' || kindOfField === 'Maze') {
                     var prob = Math.floor((Math.random() * 10) + 1);
