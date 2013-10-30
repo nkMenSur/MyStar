@@ -329,7 +329,7 @@ $(function () {
                 if (newStartTile !== null) {
                     newStartTile.className += ' marker';
                 } else {
-                    alert('There are two options:\n\n1. You\'ve reached your startpoint. To ignore the dead end and restart from your dedicated start point, just klick on "Start" again. \n\n 2.If there\'s absolutely no way out, try another Start/End combination.');
+                    alert('There are two options:\n\n 1. You\'ve reached your startpoint. To ignore the dead end and restart from your dedicated start point, just klick on "Start" again. \n\n 2.If there\'s absolutely no way out, try another Start/End combination.');
                     return;
                 }
 
