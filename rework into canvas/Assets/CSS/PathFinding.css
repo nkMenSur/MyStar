@@ -1,0 +1,77 @@
+.rainCoat {
+    /*width:512px;
+    margin:0 auto;*/
+}
+div.row:first-child {
+    margin-top:0px;
+}
+div.row {
+    margin-top:20px;
+    text-align:center;
+    display:block;
+}
+.clearfix:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+}
+div.row label {
+    display:block;
+}
+.customButton {
+    padding:10px 15px;
+    width:86%;
+    background-color:#666;
+    text-align:center;
+    cursor:pointer;
+}
+.form{
+    background-color:#939496;
+    padding:14px 20px 20px 20px;
+    margin-bottom: 30px;
+}
+.form,
+.frame{
+    float:left;
+}
+.plains, .rock, .wall {
+    height:8px;
+    width:8px;
+    text-align:center;
+    display:inline-block;
+    cursor:pointer;
+    /*border:1px dashed #fff;*/
+}
+.plains {
+    background-color:#fb0;
+}
+.rock {
+    background-color:#666!important;
+}
+.wall {
+    background-color:#000!important;
+}
+.frame{
+    margin-left:15px;
+}
+.frame div.marker {
+    background-color:green;
+}
+
+.end {
+    background-color:#f00!important;
+}
+.start{
+    background-color:#4cff00
+}
+#pathFind {
+    background-color:#fff;
+    margin-left:20px;
+    cursor:pointer;
+}
+.canvas {
+    background-color:#ccc;
+}
