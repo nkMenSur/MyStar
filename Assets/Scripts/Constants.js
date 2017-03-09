@@ -19,6 +19,9 @@ var Constants = {
       Width:0,
       Height:0
     },
+  },
+  Times: {
+    FrameLength: 100
   }
 };
 

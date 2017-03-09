@@ -162,8 +162,8 @@ function startEndSet() {
 function check(newStart, curX, curY) {
   var id = curX + '|' + curY;
   var mod, curX, curY, endX, endY;
-      endX = win.endTile.x;
-      endY = win.endTile.y;
+  endX = win.endTile.x;
+  endY = win.endTile.y;
   if (nodes[id] !== undefined && nodes[id].type === 1 && !nodes[id].closed) {
     /* Δx² + Δy² = distance between Start- and End-Point*/
     nodes[id].distanceToTarget = Math.pow(Math.abs(curX - endX), 2) + Math.pow(Math.abs(curY - endY), 2);
@@ -207,32 +207,32 @@ function alternatingPath(amountOfSurroundingTiles) {
 };  
 var steps = 0;
 function drawMarker(x,y){
-    var tileSideLength = Constants.Measurements.BrickDimensions.SideLength;
-    var desiredTileX = x * tileSideLength;
-    var desiredTileY = y * tileSideLength;
-    var currentTile = nodes[x + '|' + y];
-    
-    currentTile.timesVisited++;
+  var tileSideLength = Constants.Measurements.BrickDimensions.SideLength;
+  var desiredTileX = x * tileSideLength;
+  var desiredTileY = y * tileSideLength;
+  var currentTile = nodes[x + '|' + y];
 
-    context.beginPath();
-    
-    switch(currentTile.timesVisited){
-      case 1:
-        context.strokeStyle = "#00529e";
-      break;
+  currentTile.timesVisited++;
 
-      case 2:
-        context.strokeStyle = "#ffe500";
-      break;
-      
-      default:
-        context.strokeStyle = "#e3001b";
-      break;
-    }
-    context.lineWidth="1";
-    context.rect(desiredTileX, desiredTileY, tileSideLength, tileSideLength);
-    context.stroke();
-    steps++;
+  context.beginPath();
+
+  switch(currentTile.timesVisited){
+    case 1:
+    context.strokeStyle = "#00529e";
+    break;
+
+    case 2:
+    context.strokeStyle = "#ffe500";
+    break;
+
+    default:
+    context.strokeStyle = "#e3001b";
+    break;
+  }
+  context.lineWidth="1";
+  context.rect(desiredTileX, desiredTileY, tileSideLength, tileSideLength);
+  context.stroke();
+  steps++;
 }
 
 
@@ -244,6 +244,8 @@ function findPath(){
     var endGame = false;
     var currentPlateX = win.startTile.x;
     var currentPlateY = win.startTile.y;
+
+    var t1 = new Date();
 
     while (!endGame) {
       var distanceComparison = 4294967295;
@@ -283,6 +285,7 @@ function findPath(){
       if (currentPlateX === win.endTile.x && currentPlateY === win.endTile.y) {
         endGame = true;
       };
+
     };
     console.log(new Date - d1);
     console.log(steps)
