@@ -1,8 +1,8 @@
 var map;
 var conf = {
     canvas: {
-        width: 800,
-        height: 600
+        tilesXamount: 15,
+        tilesYamount: 12
     },
     cell: {
         width: 40,
